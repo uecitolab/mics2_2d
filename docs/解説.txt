@@ -1,0 +1,19 @@
+﻿■　ファイルの説明
+
+docs/
+source/
+  bitboard.h/.cpp               Bitboard(盤面の駒のある場所や、ある駒による利きなどを表現するのに使う)
+  config.h                      各種コンパイルオプションに基づき、configurationを行なう。
+  evaluate.h/.cpp               評価関数
+  misc.h/.cpp                   乱数生成など
+  movegen.cpp                   指し手生成器
+  position.h/.cpp               局面クラス
+  search.h/.cpp                 探索部
+  types.h/.cpp                  コンパイル時の設定や、各種構造体の定義。
+  usi.h/.cpp                    USIプロトコルによる入出力
+
+  extra/                        拡張用クラス
+    bitop.h                     SSE、AVXの命令をsoftwareでemulationするためのマクロ群
+    macros.h                    マクロ集。
+    rp_cmd.cpp
+    user_test.cpp
