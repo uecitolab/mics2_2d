@@ -50,7 +50,6 @@ void Search::init() {}
 // isreadyコマンドの応答中に呼び出される。時間のかかる処理はここに書くこと。
 void Search::clear() {}
 
-Value search(Position& pos, int depth, int ply_from_root);
 Value search(Position& pos, Value alpha, Value beta, int depth, int ply_from_root);
 Value qsearch(Position& pos, Value alpha, Value beta, int depth, int ply_from_root);
 
@@ -155,44 +154,6 @@ void Search::search(Position& pos)
 
 END:;
     std::cout << "bestmove " << bestMove << std::endl;
-}
-
-Value search(Position& pos, int depth, int ply_from_root)
-{
-    if (depth <= 0)
-        return Eval::evaluate(pos);
-
-    Value maxValue = -VALUE_INFINITE;
-    StateInfo si;
-
-    // この局面でdo_move()された合法手の数
-    int moveCount = 0;
-
-    // 千日手の検出
-    RepetitionState draw_type = pos.is_repetition();
-    if (draw_type != REPETITION_NONE)
-        return draw_value(draw_type, pos.side_to_move());
-
-    for (ExtMove m : MoveList<LEGAL_ALL>(pos))
-    {
-        // 局面を1手進める
-        pos.do_move(m.move, si);
-        ++moveCount;
-
-        // 再帰的にsearch()を呼び出す
-        Value value = -search(pos, depth - 1, ply_from_root + 1);
-
-        // 局面を1手戻す
-        pos.undo_move(m.move);
-
-        if (value > maxValue)
-            maxValue = value;
-    }
-
-    if (moveCount == 0)
-        return mated_in(ply_from_root);
-
-    return maxValue;
 }
 
 Value search(Position& pos, Value alpha, Value beta, int depth, int ply_from_root)
