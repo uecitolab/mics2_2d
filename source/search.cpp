@@ -123,6 +123,10 @@ void Search::search(Position& pos)
                 // search()を呼び出す
                 Value value = -search(pos, alpha, beta, rootDepth - 1, 0);
 
+                // 探索終了であれば返り値は信用できない
+                if (Stop)
+                    break;
+
                 // 局面を1手戻す
                 pos.undo_move(move);
 
